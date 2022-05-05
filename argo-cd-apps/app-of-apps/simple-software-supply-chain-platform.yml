@@ -9,7 +9,7 @@ spec:
   project: default
 
   source:
-    path: argo-cd-apps/overlays/simple-software-supply-chain-platform
+    path: argo-cd-apps/overlays/simple-software-supply-chain-platform/
     repoURL: https://github.com/ploigos-automated-governance/2-platform-ops.git
     targetRevision: main
 
