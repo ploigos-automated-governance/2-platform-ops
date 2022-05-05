@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-software-supply-chain-platform
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+
+  source:
+    path: argo-cd-apps/overlays/simple-software-supply-chain-platform
+    repoURL: https://github.com/ploigos-automated-governance/2-platform-ops.git
+    targetRevision: main
+
+  destination:
+    namespace: devsecops
+    server: https://kubernetes.default.svc
+
+  syncPolicy:
+
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
