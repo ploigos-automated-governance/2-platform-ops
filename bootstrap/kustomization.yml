@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - openshift-gitops-clusterroles.yml
 - openshift-gitops-subscription.yml
+- redhatgov-catalogsource.yuml
