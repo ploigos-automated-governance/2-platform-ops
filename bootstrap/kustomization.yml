@@ -5,3 +5,4 @@ resources:
 - openshift-gitops-clusterroles.yml
 - openshift-gitops-subscription.yml
 - redhatgov-catalogsource.yml
+- devsecops-namespace.yml
