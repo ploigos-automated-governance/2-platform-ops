@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - operatorgroup.yml
   - ploigos-software-factory-subscription.yml
-  - ploigos-platform.yml
