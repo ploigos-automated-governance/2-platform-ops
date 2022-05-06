@@ -9,7 +9,6 @@ metadata:
 spec:
   project: default
 
-
   source:
     path: argo-cd-apps/overlays/ploigos-software-factory/
     repoURL: https://github.com/ploigos-automated-governance/2-platform-ops.git

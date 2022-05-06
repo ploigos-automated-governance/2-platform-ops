@@ -5,3 +5,4 @@ resources:
   - devsecops-namespace.yml
   - operatorgroup.yml
   - ploigos-software-factory-subscription.yml
+  - ploigos-platform.yml
