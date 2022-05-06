@@ -15,7 +15,7 @@ spec:
     targetRevision: main
 
   destination:
-    namespace: devsecops
+    namespace: openshift-gitops
     server: https://kubernetes.default.svc
 
   syncPolicy:
