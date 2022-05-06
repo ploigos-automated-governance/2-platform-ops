@@ -5,7 +5,6 @@ metadata:
   namespace: devsecops
 spec:
   ploigosPlatform:
-    #helmRepository: https://ploigos.github.io/ploigos-charts
     services:
       continuousIntegration:
         tekton:
