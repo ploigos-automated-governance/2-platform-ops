@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - devsecops-namespace.yml
+  - redhatgov-catalogsource.yml
   - operatorgroup.yml
   - ploigos-software-factory-subscription.yml
