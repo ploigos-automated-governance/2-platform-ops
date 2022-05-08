@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ploigos-everything-pipeline-application
+  namespace: devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+
+# TODO - Figure out how to reference the charts in here and add the proper values 
+  source:
+    # chart: []needs ]
+    repoURL: https://github.com/ploigos/ploigos-charts
+    # targetRevision: 0.2.12
+    # helm:
+    #   values: |
+    #     server:
+    #       ingress:
+    #         enabled: false
+
+  destination:
+    namespace: devsecops
+    server: https://kubernetes.default.svc
+
+  syncPolicy:
+
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
+
+    retry:
+      limit: 5
+      backoff:
+        duration: 15s
