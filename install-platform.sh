@@ -28,6 +28,10 @@ if [ "${STATUS}" != 0 ]; then
     exit 1
 fi
 
+# Delete LimitRanges for created namespaces if they exist
+oc delete limitrange --all -n devsecops
+oc delete limitrange --all -n sigstore
+
 # Increase size of SonarQube PVC if needed. Requires restarting the sonarqube pod.
 SONARQUBE_STORAGE=$(oc get pvc nexus-sonatype-nexus-data -o yaml | yq .spec.resources.requests.storage)
 if [ ${SONARQUBE_STORAGE} != ${SONARQUBE_STORAGE_DESIRED} ]; then
@@ -35,5 +39,5 @@ if [ ${SONARQUBE_STORAGE} != ${SONARQUBE_STORAGE_DESIRED} ]; then
     oc delete po -l app=sonatype-nexus -n devsecops
 fi
 
-echo "INSTALL SUCCESSFUL"
+echo "Installation Successful!"
 
