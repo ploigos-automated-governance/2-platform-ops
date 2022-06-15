@@ -28,10 +28,6 @@ if [ "${STATUS}" != 0 ]; then
     exit 1
 fi
 
-# Delete LimitRanges for created namespaces if they exist
-oc delete limitrange --all -n devsecops
-oc delete limitrange --all -n sigstore
-
 # Increase size of SonarQube PVC if needed. Requires restarting the sonarqube pod.
 echo "Setting SonarQube PVC Size"
 echo "... Waiting for PVC to be created"
@@ -77,4 +73,10 @@ while [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; do
   fi
 done
 
+# Delete LimitRanges for created namespaces if they exist
+echo "Deleting LimitRanges"
+oc delete limitrange --all -n devsecops
+oc delete limitrange --all -n sigstore
+
 echo "Installation Successful!"
+
