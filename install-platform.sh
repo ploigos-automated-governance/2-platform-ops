@@ -39,8 +39,9 @@ STATUS=1
 i=0
 SONARQUBE_PVC_NAME=nexus-sonatype-nexus-data
 while [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; do
+  ((i=i+1))
   set +e
-  oc get pvc "${SONARQUBE_PVC_NAME}" -o name
+  oc get pvc "${SONARQUBE_PVC_NAME}" -n devsecops -o name
   STATUS=$?
   set -e
   if [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; then
@@ -48,7 +49,7 @@ while [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; do
       sleep ${RETRY_WAIT}
   fi
 done
-SONARQUBE_STORAGE=$(oc get pvc ${SONARQUBE_PVC_NAME} -o yaml | yq .spec.resources.requests.storage)
+SONARQUBE_STORAGE=$(oc get pvc ${SONARQUBE_PVC_NAME} -n devsecops -o yaml | yq .spec.resources.requests.storage)
 if [ ${SONARQUBE_STORAGE} != ${SONARQUBE_STORAGE_DESIRED} ]; then
     echo "... Updating pvc size to ${SONARQUBE_STORAGE_DESIRED}"
     sleep 10 # Apparently this fails if you do it immediately after resource creation
