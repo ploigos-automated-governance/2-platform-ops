@@ -34,7 +34,7 @@ oc delete limitrange --all -n sigstore
 
 # Increase size of SonarQube PVC if needed. Requires restarting the sonarqube pod.
 echo "Setting SonarQube PVC Size"
-echo "... Waiting for PVC to exist"
+echo "... Waiting for PVC to be created"
 STATUS=1
 i=0
 SONARQUBE_PVC_NAME=nexus-sonatype-nexus-data
@@ -60,5 +60,21 @@ if [ ${SONARQUBE_STORAGE} != ${SONARQUBE_STORAGE_DESIRED} ]; then
 else
   echo "SonarQube PVC is already sized correctly"
 fi
+
+echo "Waiting for Gitea route to be created"
+STATUS=1
+i=0
+GITEA_ROUTE_NAME=gitea
+while [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; do
+  ((i=i+1))
+  set +e
+  oc get route "${GITEA_ROUTE_NAME}" -n devsecops -o name
+  STATUS=$?
+  set -e
+  if [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; then
+      echo "... Waiting for Gitea Route to be created. Checking again in ${RETRY_WAIT} seconds. Retry ${i} of ${MAX_RETRIES}."
+      sleep ${RETRY_WAIT}
+  fi
+done
 
 echo "Installation Successful!"
