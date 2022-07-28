@@ -27,6 +27,11 @@ if [ "${STATUS}" != 0 ]; then
     exit 1
 fi
 
+# Delete LimitRanges for created namespaces if they exist
+echo "Deleting LimitRanges"
+oc delete limitrange --all -n devsecops
+oc delete limitrange --all -n sigstore
+
 echo "Waiting for Gitea route to be created"
 STATUS=1
 i=0
@@ -42,11 +47,6 @@ while [ "${STATUS}" != 0 ] && [ $i -lt "${MAX_RETRIES}" ]; do
       sleep ${RETRY_WAIT}
   fi
 done
-
-# Delete LimitRanges for created namespaces if they exist
-echo "Deleting LimitRanges"
-oc delete limitrange --all -n devsecops
-oc delete limitrange --all -n sigstore
 
 echo "Installation Successful!"
 
